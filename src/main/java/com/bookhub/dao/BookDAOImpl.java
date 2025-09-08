@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class BookDAOImpl implements BookDAO {
 
     @Override
-    public void saveBook(Book book) throws SQLException {
+    public boolean saveBook(Book book) throws SQLException {
         Connection connection = DBConnectionManager.connection();
         String query = DbConstent.SAVE_BOOK_SQL;
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -26,6 +26,7 @@ public class BookDAOImpl implements BookDAO {
         System.out.println(count + "row/s affected");
         preparedStatement.close();
         connection.close();
+        return  count == 1;
     }
 
     @Override
@@ -59,9 +60,10 @@ public class BookDAOImpl implements BookDAO {
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setInt(1, bookId);
         ResultSet resultSet = preparedStatement.executeQuery();
+        Book book = DBConnectionManager.createBookObject(resultSet);
         preparedStatement.close();
         connection.close();
-        return DBConnectionManager.createBookObject(resultSet);
+        return book;
     }
 
     @Override
@@ -84,7 +86,7 @@ public class BookDAOImpl implements BookDAO {
     }
 
     @Override
-    public void deleteBookById(int bookId) throws SQLException {
+    public boolean deleteBookById(int bookId) throws SQLException {
 
         Connection connection = DBConnectionManager.connection();
         String query = DbConstent.DELETE_BOOK_SQL;
@@ -94,5 +96,6 @@ public class BookDAOImpl implements BookDAO {
         System.out.println(count + "row/s affected");
         preparedStatement.close();
         connection.close();
+        return count == 1;
     }
 }
