@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.bookhub</groupId>
-  <artifactId>Bookstore-Project</artifactId>
+  <artifactId>bookstore-project</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
